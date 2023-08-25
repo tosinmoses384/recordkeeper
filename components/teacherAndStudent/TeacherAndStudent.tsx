@@ -64,115 +64,21 @@ export interface investorDefinedTypes {
   companyLogo: string;
 }
 
-const TeacherAndStudent = ({ setshowModal, iTab, setTab }: any) => {
+const TeacherAndStudent = ({ 
+  setshowModal, 
+  iTab, 
+  setTab,
+  individual,
+  setIndividual,
+  fetchedStudent,
+  setFetchedStudent 
+
+}: any) => {
   // const [individual, setIndividual] = useState([]);
   const [pageSize] = useState(10);
   const [currentPage] = useState(1);
 
-  const [individual, setIndividual] = useState([
-    {
-      _id: "1",
-      NationalID: "1692869557",
-      title: "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      teacherNumber: "mellow pop, enhanced with  iconic costumes",
-      salary: "mellow pop, enhanced with  iconic costumes",
-    },
-    {
-      _id: "2",
-      NationalID: "1692869557",
-      title: "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      teacherNumber: "mellow pop, enhanced with  iconic costumes",
-      salary: "mellow pop, enhanced with  iconic costumes",
-    },
-    {
-      _id: "3",
-      NationalID: "1692869557",
-      title: "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      teacherNumber: "mellow pop, enhanced with  iconic costumes",
-      salary: "mellow pop, enhanced with  iconic costumes",
-    },
-    {
-      _id: "4",
-      NationalID: "1692869557",
-      title: "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      teacherNumber: "mellow pop, enhanced with  iconic costumes",
-      salary: "mellow pop, enhanced with  iconic costumes",
-    },
-    {
-      _id: "5",
-      NationalID: "1692869557",
-      title: "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      teacherNumber: "mellow pop, enhanced with  iconic costumes",
-      salary: "mellow pop, enhanced with  iconic costumes",
-    },
-  ]);
-  const [fetchedStudent, setFetchedStudent] = useState([
-    {
-      _id: "1",
-      NationalID: "1692869557",
-      // "title": "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      studentNumber: "mellow pop, enhanced with  iconic costumes",
-      // "salary": "mellow pop, enhanced with  iconic costumes",
-    },
-    {
-      _id: "2",
-      NationalID: "1692869557",
-      // "title": "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      studentNumber: "mellow pop, enhanced with  iconic costumes",
-      // "salary": "mellow pop, enhanced with  iconic costumes",
-    },
-    {
-      _id: "3",
-      NationalID: "1692869557",
-      // "title": "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      studentNumber: "mellow pop, enhanced with  iconic costumes",
-      // "salary": "mellow pop, enhanced with  iconic costumes",
-    },
-    {
-      _id: "4",
-      NationalID: "1692869557",
-      // "title": "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      studentNumber: "mellow pop, enhanced with  iconic costumes",
-      // "salary": "mellow pop, enhanced with  iconic costumes",
-    },
-    {
-      _id: "5",
-      NationalID: "1692869557",
-      // "title": "Mr.",
-      firstname: "Six Bears Running",
-      surname: "mellow pop, enhanced with  iconic costumes",
-      date: "2023-08-17T09:30:09.988Z",
-      studentNumber: "mellow pop, enhanced with  iconic costumes",
-      // "salary": "mellow pop, enhanced with  iconic costumes",
-    },
-  ]);
+ 
   const [corporate, setCorporate] = useState([]);
 
   const [newestOrOldest, setNewestOrOldest] = useState("newestFirst");
@@ -314,4 +220,4 @@ const TeacherAndStudent = ({ setshowModal, iTab, setTab }: any) => {
   );
 };
 
-export default TeacherAndStudent;
+export {TeacherAndStudent};

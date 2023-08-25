@@ -17,9 +17,14 @@ export type newUser = {
 
 const Modal = ({
   replyHasBeenSent,
-
   setshowModal,
   iTab,
+  individual,
+  setIndividual,
+  fetchedStudent,
+  setFetchedStudent
+
+
 }: any) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isDateValid, setIsDateValid] = useState(true);
@@ -102,6 +107,9 @@ const Modal = ({
             number: formState.numb,
             salary: formState.salary,
           };
+          setIndividual((prev:any)=>{
+            return prev.push(payload)
+          })
 
           await await delay(9000);
           // showToastMessage("added successfully");
@@ -155,6 +163,9 @@ const Modal = ({
             date1: formState.date1,
             number: formState.numb,
           };
+          setFetchedStudent((prev:any)=>{
+            return prev.push(payload)
+          })
 
           await await delay(9000);
           // showToastMessage("added successfully");
@@ -550,4 +561,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export {Modal};

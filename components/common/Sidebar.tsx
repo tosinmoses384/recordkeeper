@@ -54,4 +54,4 @@ const Sidebar = ({ activeTab, handleTabClick }: any) => {
   );
 };
 
-export default Sidebar;
+export {Sidebar};

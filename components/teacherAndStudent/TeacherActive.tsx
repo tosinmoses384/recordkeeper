@@ -374,4 +374,4 @@ const TeacherActive = ({
   );
 };
 
-export default TeacherActive;
+export {TeacherActive};

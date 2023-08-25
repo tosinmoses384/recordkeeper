@@ -91,4 +91,4 @@ const Tab = ({
   )
 }
 
-export default Tab
+export {Tab}

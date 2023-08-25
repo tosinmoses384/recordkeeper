@@ -349,4 +349,4 @@ const StudentActive = ({
   )
 }
 
-export default StudentActive
+export {StudentActive}

@@ -43,4 +43,4 @@ const CustomTableLoader = ({ tableTop }: compProps) => (
   </>
 );
 
-export default CustomTableLoader;
+export {CustomTableLoader};
