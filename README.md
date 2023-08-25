@@ -1,29 +1,12 @@
-# Next.js + Jest
+# Popular Concert Venue
 
-This example shows how to configure Jest to work with Next.js.
+### An app to support the Udemy course [Testing Next.js Apps](https://www.udemy.com/course/nextjs-testing/)
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript.
+## Installation
 
-## How to Use
+1. Run `npm install`
 
-Quickly get started using [Create Next App](https://github.com/vercel/next.js/tree/canary/packages/create-next-app#readme)!
 
-In your terminal, run the following command:
+## Running the App
 
-```bash
-npx create-next-app --example with-jest with-jest-app
-```
-
-```bash
-yarn create next-app --example with-jest with-jest-app
-```
-
-```bash
-pnpm create next-app --example with-jest with-jest-app
-```
-
-## Run Jest Tests
-
-```bash
-npm test
-```
+Run `npm run dev`. The app will be found at [http://localhost:3000] or [http://localhost:3001]
