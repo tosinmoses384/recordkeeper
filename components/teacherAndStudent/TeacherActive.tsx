@@ -61,10 +61,10 @@ const TeacherActive = ({
   }
 
   // DEFAULT
-  const getAdminAllindividualInvestors = async () => {
+  const getAllTeachers = async () => {
     setIsFetching(true);
     try {
-      //  const res = await adminService.getAdminAllindividualInvestors(pageSize, currentPage);
+      //  const res = await adminService.getAllTeachers(pageSize, currentPage);
       //  if (res.data.data.results.length === 0) {
       //    setShowPagination('show-no');
       //  } else {
@@ -92,7 +92,7 @@ const TeacherActive = ({
   };
 
   useEffect(() => {
-    getAdminAllindividualInvestors();
+    getAllTeachers();
   }, [currentPage, pageSize]);
 
   return (

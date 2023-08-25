@@ -60,10 +60,10 @@ const StudentActive = ({
   }
 
   // DEFAULT
-  const getAdminAllindividualInvestors = async () => {
+  const getAllStudent = async () => {
     setIsFetching(true);
     try {
-      //  const res = await adminService.getAdminAllindividualInvestors(pageSize, currentPage);
+      //  const res = await adminService.getAllStudent(pageSize, currentPage);
       //  if (res.data.data.results.length === 0) {
       //    setShowPagination('show-no');
       //  } else {
@@ -91,7 +91,7 @@ const StudentActive = ({
   };
 
   useEffect(() => {
-    getAdminAllindividualInvestors();
+    getAllStudent();
   }, [currentPage, pageSize]);
 
  
