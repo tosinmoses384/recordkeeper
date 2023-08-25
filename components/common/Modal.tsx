@@ -23,8 +23,6 @@ const Modal = ({
   setIndividual,
   fetchedStudent,
   setFetchedStudent
-
-
 }: any) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isDateValid, setIsDateValid] = useState(true);
@@ -292,12 +290,13 @@ const Modal = ({
                 <div className="grid md:grid-cols-2 gap-5">
                   <div>
                     <label
-                      htmlFor="f-name"
+                      htmlFor="fname"
                       className="block mb-2 text-sm text-[#000]"
                     >
                       Firstname<span className="text-red-500"> *</span>
                     </label>
                     <input
+                    id='fname'
                       type="text"
                       name="firstname"
                       placeholder="First name"
@@ -319,12 +318,13 @@ const Modal = ({
 
                   <div>
                     <label
-                      htmlFor="f-name"
+                      htmlFor="lname"
                       className="block mb-2 text-sm text-[#000]"
                     >
                       Surname<span className="text-red-500"> *</span>
                     </label>
                     <input
+                      id='lname'
                       type="text"
                       name="surname"
                       placeholder="Surname"
@@ -346,12 +346,13 @@ const Modal = ({
 
                   <div>
                     <label
-                      htmlFor="f-name"
+                      htmlFor="nid"
                       className="block mb-2 text-sm text-[#000]"
                     >
                       National ID Number<span className="text-red-500"> *</span>
                     </label>
                     <input
+                      id='nid'
                       type="text"
                       name="id"
                       placeholder="National ID Number"
@@ -375,12 +376,13 @@ const Modal = ({
                   {iTab === "Teacher" && (
                     <div>
                       <label
-                        htmlFor="role"
+                        htmlFor="ttitle"
                         className="block mb-2 text-sm text-[#000]"
                       >
                         Title<span className="text-red-500"> *</span>
                       </label>
                       <select
+                        id='ttitle'
                         name="title"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         value={formState.title}
@@ -410,12 +412,13 @@ const Modal = ({
                   {iTab === "Teacher" && (
                     <div>
                       <label
-                        htmlFor="f-name"
+                        htmlFor="dob"
                         className="block mb-2 text-sm text-[#000]"
                       >
-                        Date of Birth<span className="text-red-500"> *</span>
+                        Teacher Date of Birth<span className="text-red-500"> *</span>
                       </label>
                       <input
+                        id='dob'
                         type="date"
                         name="date"
                         placeholder="Date of birth"
@@ -449,12 +452,13 @@ const Modal = ({
                   {iTab === "Student" && (
                     <div>
                       <label
-                        htmlFor="f-name"
+                        htmlFor="dob1"
                         className="block mb-2 text-sm text-[#000]"
                       >
-                        Date of Birth<span className="text-red-500"> *</span>
+                        Student Date of Birth<span className="text-red-500"> *</span>
                       </label>
                       <input
+                        id='dob1'
                         type="date"
                         name="date1"
                         placeholder="Date of birth"
@@ -487,13 +491,14 @@ const Modal = ({
 
                   <div>
                     <label
-                      htmlFor="f-name"
+                      htmlFor="tsnumb"
                       className="block mb-2 text-sm text-[#000]"
                     >
                       {iTab === "Teacher" ? "Teacher Number" : "Student Number"}
                       <span className="text-red-500"> *</span>
                     </label>
                     <input
+                      id='tsnumb'
                       type="text"
                       name="numb"
                       placeholder="Number"
@@ -516,12 +521,13 @@ const Modal = ({
                   {iTab === "Teacher" && (
                     <div>
                       <label
-                        htmlFor="f-name"
+                        htmlFor="sal"
                         className="block mb-2 text-sm text-[#000]"
                       >
                         Salary<span className="text-red-500"></span>
                       </label>
                       <input
+                        id='sal'
                         type="number"
                         name="salary"
                         placeholder="Salary"

@@ -6,7 +6,9 @@ import { TfiWallet } from "react-icons/tfi";
 
 const Sidebar = ({ activeTab, handleTabClick }: any) => {
   return (
-    <div className="hidden lg:block  space-y-3 w-[20%] lg:sticky lg:top-0 lg:h-screen">
+    <div
+   
+     className="hidden lg:block  space-y-3 w-[20%] lg:sticky lg:top-0 lg:h-screen">
       <div
         className={`flex items-center space-x-3 px-6 py-3 cursor-pointer ${
           activeTab === "Teacher"
