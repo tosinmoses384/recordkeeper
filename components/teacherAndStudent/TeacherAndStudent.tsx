@@ -1,14 +1,8 @@
+import { StudentActive, TeacherActive } from "@/components";
 import { useEffect, useState } from "react";
-import { TeacherActive, StudentActive } from "@/components";
-// import AdminInvestordisable from '@components/templates/admin/AdminInvestordisable';
+
 import { Tab } from "@/components";
-// import { useMessageApi } from '@hooks/useMessageApi';
-// import { adminService } from '@services/admin/index';
-// import {
-//   CSVInvestorCorporateInvestmentHeader,
-//   CSVInvestorInvestmentHeader,
-// } from '@utils/csvRaiseTableHeader';
-// import { CSVLink } from 'react-csv';
+
 
 export interface investorDefinedTypes {
   summary: [];
@@ -71,10 +65,114 @@ export interface investorDefinedTypes {
 }
 
 const TeacherAndStudent = ({ setshowModal, iTab, setTab }: any) => {
+  // const [individual, setIndividual] = useState([]);
   const [pageSize] = useState(10);
   const [currentPage] = useState(1);
 
-  const [individual, setIndividual] = useState([]);
+  const [individual, setIndividual] = useState([
+    {
+      _id: "1",
+      NationalID: "1692869557",
+      title: "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      teacherNumber: "mellow pop, enhanced with  iconic costumes",
+      salary: "mellow pop, enhanced with  iconic costumes",
+    },
+    {
+      _id: "2",
+      NationalID: "1692869557",
+      title: "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      teacherNumber: "mellow pop, enhanced with  iconic costumes",
+      salary: "mellow pop, enhanced with  iconic costumes",
+    },
+    {
+      _id: "3",
+      NationalID: "1692869557",
+      title: "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      teacherNumber: "mellow pop, enhanced with  iconic costumes",
+      salary: "mellow pop, enhanced with  iconic costumes",
+    },
+    {
+      _id: "4",
+      NationalID: "1692869557",
+      title: "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      teacherNumber: "mellow pop, enhanced with  iconic costumes",
+      salary: "mellow pop, enhanced with  iconic costumes",
+    },
+    {
+      _id: "5",
+      NationalID: "1692869557",
+      title: "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      teacherNumber: "mellow pop, enhanced with  iconic costumes",
+      salary: "mellow pop, enhanced with  iconic costumes",
+    },
+  ]);
+  const [fetchedStudent, setFetchedStudent] = useState([
+    {
+      _id: "1",
+      NationalID: "1692869557",
+      // "title": "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      studentNumber: "mellow pop, enhanced with  iconic costumes",
+      // "salary": "mellow pop, enhanced with  iconic costumes",
+    },
+    {
+      _id: "2",
+      NationalID: "1692869557",
+      // "title": "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      studentNumber: "mellow pop, enhanced with  iconic costumes",
+      // "salary": "mellow pop, enhanced with  iconic costumes",
+    },
+    {
+      _id: "3",
+      NationalID: "1692869557",
+      // "title": "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      studentNumber: "mellow pop, enhanced with  iconic costumes",
+      // "salary": "mellow pop, enhanced with  iconic costumes",
+    },
+    {
+      _id: "4",
+      NationalID: "1692869557",
+      // "title": "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      studentNumber: "mellow pop, enhanced with  iconic costumes",
+      // "salary": "mellow pop, enhanced with  iconic costumes",
+    },
+    {
+      _id: "5",
+      NationalID: "1692869557",
+      // "title": "Mr.",
+      firstname: "Six Bears Running",
+      surname: "mellow pop, enhanced with  iconic costumes",
+      date: "2023-08-17T09:30:09.988Z",
+      studentNumber: "mellow pop, enhanced with  iconic costumes",
+      // "salary": "mellow pop, enhanced with  iconic costumes",
+    },
+  ]);
   const [corporate, setCorporate] = useState([]);
 
   const [newestOrOldest, setNewestOrOldest] = useState("newestFirst");
@@ -85,7 +183,6 @@ const TeacherAndStudent = ({ setshowModal, iTab, setTab }: any) => {
   const [searchCriteria, setSearchCriteria] = useState("default");
   const [searchMode, setSearchMode] = useState("isTrue");
 
-  
   const handleTab = (e: any) => {
     setTab(e.target.textContent.split("(")[0].trim());
   };
@@ -155,6 +252,8 @@ const TeacherAndStudent = ({ setshowModal, iTab, setTab }: any) => {
 
   return (
     <>
+      {/* <ToastContainer /> */}
+
       <div className="flex flex-wrap gap-3 items-center justify-between">
         <div>
           <div className="font-semibold text-xl text-[#000]">Users</div>
@@ -191,16 +290,20 @@ const TeacherAndStudent = ({ setshowModal, iTab, setTab }: any) => {
                   searchMode={searchMode}
                   newestOrOldest={newestOrOldest}
                   filterName={filterName}
+                  individual={individual}
+                  setIndividual={setIndividual}
                 />
               )}
 
-              {iTab === 'Student' && (
+              {iTab === "Student" && (
                 <StudentActive
                   searchCriteria={searchCriteria}
                   searchName={searchName}
                   searchMode={searchMode}
                   newestOrOldest={newestOrOldest}
                   filterName={filterName}
+                  setFetchedStudent={setFetchedStudent}
+                  fetchedStudent={fetchedStudent}
                 />
               )}
             </>

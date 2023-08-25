@@ -1,11 +1,8 @@
-// import { LoadingOutlined } from '@ant-design/icons';
-// import { useSme } from '@hooks/onboarding/useSme';
-// import { newTeamMember } from 'kudade/types';
-import { useState, useEffect } from "react";
-import { LoadingOutlined } from '@ant-design/icons';
+import { useEffect, useState } from "react";
 
-import { showToastMessage, showToastErrorMessage } from "@/components";
 import { ToastContainer } from "react-toastify";
+
+import moment from "moment";
 
 export type newUser = {
   id: string;
@@ -13,38 +10,42 @@ export type newUser = {
   firstname: string;
   surname: string;
   date: string;
+  date1: string;
   numb: string;
   salary?: string;
 };
-
-// export type newTeamMember = {
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   designation: string;
-//   role: string;
-//   jobStatus?: string;
-//   achievement?: string;
-// };
 
 const Modal = ({
   replyHasBeenSent,
 
   setshowModal,
-  iTab
+  iTab,
 }: any) => {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isDateValid, setIsDateValid] = useState(true);
+
+  const [isDateRangeValidTeacher, setIsDateRangeValidTeacher] = useState(true);
+  const [isDateRangeValidStudent, setIsDateRangeValidStudent] = useState(true);
+  const [startDateTeacher, setStartDateTeacher] = useState<any>();
+  const [endDateTeacher, setEndDateTeacher] = useState<any>();
+  const [startDateStudent, setStartDateStudent] = useState<any>();
+  const [endDateStudent, setEndDateStudent] = useState<any>();
+
   const [valSent, setValSent] = useState(false);
 
   const valHasBeenSent = () => {
     setValSent(!valSent);
   };
+
+  const [teacherDOB, setTeacherDOB] = useState("");
+  const [studentDOB, setStudentDOB] = useState("");
   const [expectedRetErr, setExpectedRetErr] = useState<null | string>(null);
   const [expectedRetErr1, setExpectedRetErr1] = useState<null | string>(null);
   const [expectedRetErr2, setExpectedRetErr2] = useState<null | string>(null);
   const [expectedRetErr3, setExpectedRetErr3] = useState<null | string>(null);
   const [expectedRetErr4, setExpectedRetErr4] = useState<null | string>(null);
   const [expectedRetErr5, setExpectedRetErr5] = useState<null | string>(null);
-  // const { createSmeTeam } = useSme();
+
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [formState, setFormState] = useState<newUser>({
     id: "",
@@ -52,20 +53,14 @@ const Modal = ({
     firstname: "",
     surname: "",
     date: "",
+    date1: "",
     numb: "",
     salary: "",
   });
 
-  // const [formState, setFormState] = useState<newTeamMember>({
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   designation: '',
-  //   role: 'member',
-  // });
-
   const handleChange = (e: any) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
+    valHasBeenSent();
   };
 
   const delay = (ms: number) =>
@@ -78,200 +73,161 @@ const Modal = ({
     });
 
   const addTeacher = async () => {
-
-    if (iTab === 'Teacher') {
-      valHasBeenSent()
-    if (
-      formState.id === '' ||
-      formState.title === '' ||
-      formState.firstname === '' ||
-      formState.surname === '' ||
-      formState.date === '' ||
-      formState.numb === '' ||
-      formState.salary === ''
-      ) {
-
-        valHasBeenSent()
-        
-    } else {
-       try {
-      setIsProcessing(true);
-      const payload = {
-        id: formState.id,
-        title: formState.title,
-        firstname: formState.firstname,
-        surname: formState.surname,
-        date: formState.date,
-        number: formState.numb,
-        salary: formState.date,
-      };
-      console.log(payload)
-      
-     
-      // const orgId = localStorage.getItem("orgId") ?? "1";
-
-      // const response = await createSmeTeam(orgId, payload);
-
-      // if (response.status === 201) {
-      //   // showToastMessage('added successfully');
-
-      //   await delay(5000);
-      //   replyHasBeenSent();
-
-      //   setshowModal(false);
-      // }
-    } catch (error: any) {
-      let message = "";
-
-      if (error?.response) {
-        message =
-          error.response?.data?.message ||
-          error.response?.data?.error[0].message;
-      } else if (error?.message) {
-        message = error.message;
-        showToastErrorMessage(message);
-      } else {
-        message = "Oops! Something went wrong.";
-        showToastErrorMessage(message);
-      }
-    }
-    }
-
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    } else {
-      valHasBeenSent()
+    if (iTab === "Teacher") {
+      // valHasBeenSent()
       if (
-        formState.id === '' ||
-        formState.firstname === '' ||
-        formState.surname === '' ||
-        formState.date === '' ||
-        formState.numb === '' 
-        ) {
-  
-          valHasBeenSent()
-          
+        formState.id === "" ||
+        formState.title === "" ||
+        formState.firstname === "" ||
+        formState.surname === "" ||
+        formState.date === "" ||
+        startDateTeacher === "" ||
+        formState.numb === ""
+      ) {
+        valHasBeenSent();
       } else {
-         try {
-        setIsProcessing(true);
-        const payload = {
-          id: formState.id,
-          firstname: formState.firstname,
-          surname: formState.surname,
-          date: formState.date,
-          number: formState.numb,
-        };
-        console.log(payload)
-        
-       
-        // const orgId = localStorage.getItem("orgId") ?? "1";
-  
-        // const response = await createSmeTeam(orgId, payload);
-  
-        // if (response.status === 201) {
-        //   // showToastMessage('added successfully');
-  
-        //   await delay(5000);
-        //   replyHasBeenSent();
-  
-        //   setshowModal(false);
-        // }
-      } catch (error: any) {
-        let message = "";
-  
-        if (error?.response) {
-          message =
-            error.response?.data?.message ||
-            error.response?.data?.error[0].message;
-        } else if (error?.message) {
-          message = error.message;
-          showToastErrorMessage(message);
-        } else {
-          message = "Oops! Something went wrong.";
-          showToastErrorMessage(message);
+        if (teacherDOB !== "") {
+          return;
+        }
+
+        try {
+          setIsProcessing(true);
+
+          const payload = {
+            id: formState.id,
+            title: formState.title,
+            firstname: formState.firstname,
+            surname: formState.surname,
+            date: formState.date,
+            number: formState.numb,
+            salary: formState.salary,
+          };
+
+          await await delay(9000);
+          // showToastMessage("added successfully");
+          await delay(9000);
+          replyHasBeenSent();
+          setshowModal(false);
+        } catch (error: any) {
+          let message = "";
+
+          if (error?.response) {
+            message =
+              error.response?.data?.message ||
+              error.response?.data?.error[0].message;
+          } else if (error?.message) {
+            message = error.message;
+            // showToastErrorMessage(message);
+          } else {
+            message = "Oops! Something went wrong.";
+            // showToastErrorMessage(message);
+          }
         }
       }
+    } else {
+      if (
+        formState.id === "" ||
+        formState.firstname === "" ||
+        formState.surname === "" ||
+        formState.date1 === "" ||
+        endDateStudent === "" ||
+        formState.numb === ""
+      ) {
+        valHasBeenSent();
+      } else {
+        const minAgeInYears1 = 22;
+        const selectedDate1 = moment(formState.date1, "YYYY-MM-DD");
+        const currentDate = moment();
+        const ageDifference1 = currentDate.diff(selectedDate1, "years");
+
+        if (ageDifference1 > minAgeInYears1) {
+          setStudentDOB("Their age may not be more than 22");
+          return;
+        }
+
+        try {
+          setIsProcessing(true);
+
+          const payload = {
+            id: formState.id,
+            firstname: formState.firstname,
+            surname: formState.surname,
+            date1: formState.date1,
+            number: formState.numb,
+          };
+
+          await await delay(9000);
+          // showToastMessage("added successfully");
+          await delay(9000);
+          replyHasBeenSent();
+          setshowModal(false);
+        } catch (error: any) {
+          let message = "";
+
+          if (error?.response) {
+            message =
+              error.response?.data?.message ||
+              error.response?.data?.error[0].message;
+          } else if (error?.message) {
+            message = error.message;
+            // showToastErrorMessage(message);
+          } else {
+            message = "Oops! Something went wrong.";
+            // showToastErrorMessage(message);
+          }
+        }
       }
-       
-      
     }
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
   };
 
- useEffect(() => {
-      if ( formState.id === '' ||
-      formState.title === '' ||
-      formState.firstname === '' ||
-      formState.surname === '' ||
-      formState.date === '' ||
-      formState.numb === '') {
-        setExpectedRetErr('Required field')
-      } 
-      
-    }, [valSent]);
+  const specificFunc = (
+    ageDifference: number,
+    minAgeInYears: number,
+    minAgeInYears1: number,
+    ageDifference1: number
+  ) => {
+    if (iTab === "Teacher") {
+      if (ageDifference < minAgeInYears) {
+        setTeacherDOB("Their age may not be less than 21");
+        // return;
+      } else {
+        setTeacherDOB("");
+      }
+    } else if (iTab === "Student") {
+      if (ageDifference1 > minAgeInYears1) {
+        setStudentDOB("Their age may not be more than 22");
+        // return;
+      } else {
+        setStudentDOB("");
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (
+      formState.id === "" ||
+      formState.title === "" ||
+      formState.firstname === "" ||
+      formState.surname === "" ||
+      formState.date === "" ||
+      formState.date1 === "" ||
+      formState.numb === ""
+    ) {
+      setExpectedRetErr("Required field");
+    }
+
+    const minAgeInYears = 21;
+    const minAgeInYears1 = 22;
+    // Parse the input date string using moment
+    const selectedDate = moment(formState.date, "YYYY-MM-DD");
+    const selectedDate1 = moment(formState.date1, "YYYY-MM-DD");
+    // Calculate the difference between the selected date and the current date
+    const currentDate = moment();
+    const ageDifference = currentDate.diff(selectedDate, "years");
+    const ageDifference1 = currentDate.diff(selectedDate1, "years");
+
+    specificFunc(ageDifference, minAgeInYears, minAgeInYears1, ageDifference1);
+  }, [iTab, valSent, teacherDOB, studentDOB]);
 
   return (
     <>
@@ -310,20 +266,19 @@ const Modal = ({
             {/* <!-- Modal header --> */}
             <div className="px-6 py-4 border-b rounded-t">
               <h3 className="text-base font-semibold text-gray-900 lg:text-xl">
-                {iTab === 'Teacher' ? 'Add Teacher' : 'Add Student'}
-                
+                {iTab === "Teacher" ? "Add Teacher" : "Add Student"}
               </h3>
             </div>
             {/* <!-- Modal body --> */}
             <div className="p-6">
               <div className="mb-10">
-                <p className="pt-2">{iTab === 'Teacher' ? 'Teacher' : 'Student'}</p>
+                <p className="pt-2">
+                  {iTab === "Teacher" ? "Teacher" : "Student"}
+                </p>
               </div>
 
               <form className="space-y-5">
                 <div className="grid md:grid-cols-2 gap-5">
-
-                  
                   <div>
                     <label
                       htmlFor="f-name"
@@ -340,11 +295,15 @@ const Modal = ({
                       onChange={handleChange}
                       required
                     />
-                     {formState.firstname === '' &&
+                    {formState.firstname === "" && (
                       <>
-                      {expectedRetErr && <p className="text-red-600 text-sm mt-1">{expectedRetErr}</p>}
+                        {expectedRetErr && (
+                          <p className="text-red-600 text-sm mt-1">
+                            {expectedRetErr}
+                          </p>
+                        )}
                       </>
-                    }
+                    )}
                   </div>
 
                   <div>
@@ -363,11 +322,15 @@ const Modal = ({
                       onChange={handleChange}
                       required
                     />
-                     {formState.surname === '' &&
+                    {formState.surname === "" && (
                       <>
-                      {expectedRetErr && <p className="text-red-600 text-sm mt-1">{expectedRetErr}</p>}
+                        {expectedRetErr && (
+                          <p className="text-red-600 text-sm mt-1">
+                            {expectedRetErr}
+                          </p>
+                        )}
                       </>
-                    }
+                    )}
                   </div>
 
                   <div>
@@ -386,73 +349,137 @@ const Modal = ({
                       onChange={handleChange}
                       required
                     />
-                     
-                    {formState.id === '' &&
+
+                    {formState.id === "" && (
                       <>
-                      {expectedRetErr && <p className="text-red-600 text-sm mt-1">{expectedRetErr}</p>}
+                        {expectedRetErr && (
+                          <p className="text-red-600 text-sm mt-1">
+                            {expectedRetErr}
+                          </p>
+                        )}
                       </>
-                    }
+                    )}
                   </div>
 
-                 {iTab === 'Teacher' && <div>
-                    <label
-                      htmlFor="role"
-                      className="block mb-2 text-sm text-[#000]"
-                    >
-                      Title<span className="text-red-500"> *</span>
-                    </label>
-                    <select
-                      name="title"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                      value={formState.title}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="">Select a title</option>
-                      <option value="CEO">Mr</option>
-                      <option value="CFO">Mrs</option>
-                      <option value="CTO">Miss</option>
-                      <option value="COO">Dr</option>
-                      <option value="Director">Prof</option>
-                     
-                    </select>
-                    {formState.title === '' &&
-                      <>
-                      {expectedRetErr && <p className="text-red-600 text-sm mt-1">{expectedRetErr}</p>}
-                      </>
-                    }
-                  </div>}
+                  {iTab === "Teacher" && (
+                    <div>
+                      <label
+                        htmlFor="role"
+                        className="block mb-2 text-sm text-[#000]"
+                      >
+                        Title<span className="text-red-500"> *</span>
+                      </label>
+                      <select
+                        name="title"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        value={formState.title}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Select a title</option>
+                        <option value="CEO">Mr</option>
+                        <option value="CFO">Mrs</option>
+                        <option value="CTO">Miss</option>
+                        <option value="COO">Dr</option>
+                        <option value="Director">Prof</option>
+                      </select>
 
+                      {formState.title === "" && (
+                        <>
+                          {expectedRetErr && (
+                            <p className="text-red-600 text-sm mt-1">
+                              {expectedRetErr}
+                            </p>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {iTab === "Teacher" && (
+                    <div>
+                      <label
+                        htmlFor="f-name"
+                        className="block mb-2 text-sm text-[#000]"
+                      >
+                        Date of Birth<span className="text-red-500"> *</span>
+                      </label>
+                      <input
+                        type="date"
+                        name="date"
+                        placeholder="Date of birth"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        value={formState.date}
+                        onChange={handleChange}
+                        required
+                      />
+                      {formState.date === "" && (
+                        <>
+                          {expectedRetErr && (
+                            <p className="text-red-600 text-sm mt-1">
+                              {expectedRetErr}
+                            </p>
+                          )}
+                        </>
+                      )}
+
+                      {formState.date !== "" && (
+                        <>
+                          {teacherDOB && (
+                            <p className="text-red-600 text-sm mt-1">
+                              {teacherDOB}
+                            </p>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {iTab === "Student" && (
+                    <div>
+                      <label
+                        htmlFor="f-name"
+                        className="block mb-2 text-sm text-[#000]"
+                      >
+                        Date of Birth<span className="text-red-500"> *</span>
+                      </label>
+                      <input
+                        type="date"
+                        name="date1"
+                        placeholder="Date of birth"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        value={formState.date1}
+                        onChange={handleChange}
+                        required
+                      />
+                      {formState.date1 === "" && (
+                        <>
+                          {expectedRetErr && (
+                            <p className="text-red-600 text-sm mt-1">
+                              {expectedRetErr}
+                            </p>
+                          )}
+                        </>
+                      )}
+
+                      {formState.date1 !== "" && (
+                        <>
+                          {studentDOB && (
+                            <p className="text-red-600 text-sm mt-1">
+                              {studentDOB}
+                            </p>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
 
                   <div>
                     <label
                       htmlFor="f-name"
                       className="block mb-2 text-sm text-[#000]"
                     >
-                      Date<span className="text-red-500"> *</span>
-                    </label>
-                    <input
-                      type="date"
-                      name="date"
-                      placeholder="Date of birth"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                      value={formState.date}
-                      onChange={handleChange}
-                      required
-                    />
-                     {formState.date === '' &&
-                      <>
-                      {expectedRetErr && <p className="text-red-600 text-sm mt-1">{expectedRetErr}</p>}
-                      </>
-                    }
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="f-name"
-                      className="block mb-2 text-sm text-[#000]"
-                    >
-                      {iTab === 'Teacher' ? 'Teacher Number' : 'Student Number'}
+                      {iTab === "Teacher" ? "Teacher Number" : "Student Number"}
                       <span className="text-red-500"> *</span>
                     </label>
                     <input
@@ -464,44 +491,35 @@ const Modal = ({
                       onChange={handleChange}
                       required
                     />
-                      {formState.numb === '' &&
+                    {formState.numb === "" && (
                       <>
-                      {expectedRetErr && <p className="text-red-600 text-sm mt-1">{expectedRetErr}</p>}
+                        {expectedRetErr && (
+                          <p className="text-red-600 text-sm mt-1">
+                            {expectedRetErr}
+                          </p>
+                        )}
                       </>
-                    }
+                    )}
                   </div>
 
-                 {iTab === 'Teacher' && <div>
-                    <label
-                      htmlFor="f-name"
-                      className="block mb-2 text-sm text-[#000]"
-                    >
-                      Salary<span className="text-red-500"></span>
-                    </label>
-                    <input
-                      type="number"
-                      name="salary"
-                      placeholder="Salary"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                      value={formState.salary}
-                      onChange={handleChange}
-                    />
-                  </div>}
-
-                  {/* <div>
-                    <label htmlFor="role" className="block mb-2 text-sm text-[#000]">
-                      Number<span className="text-red-500"> *</span>
-                    </label>
-                    <select
-                      name="numb"
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                      value={formState.numb}
-                      onChange={handleChange}
-                    >
-                      <option value="owner">owner</option>
-                      <option value="member">member</option>
-                    </select>
-                  </div> */}
+                  {iTab === "Teacher" && (
+                    <div>
+                      <label
+                        htmlFor="f-name"
+                        className="block mb-2 text-sm text-[#000]"
+                      >
+                        Salary<span className="text-red-500"></span>
+                      </label>
+                      <input
+                        type="number"
+                        name="salary"
+                        placeholder="Salary"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        value={formState.salary}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  )}
                 </div>
               </form>
 
@@ -516,8 +534,8 @@ const Modal = ({
                 >
                   {isProcessing ? (
                     <>
-                      {/* <LoadingOutlined style={{ fontSize: 24 }} spin />  */}
-                      Inviting...
+                     
+                      Processing Data...
                     </>
                   ) : (
                     "Save"

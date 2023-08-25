@@ -1,13 +1,7 @@
-// import React from 'react'
-// import PaginationComponent from '@components/elements/Admin/PaginationComponent';
+
 import { CustomTableLoader } from '@/components';
-// import { useMessageApi } from '@hooks/useMessageApi';
-// import { EmptyRaiseExplore } from '@modules/raise/Detail/EmptyRaise';
-// import { adminService } from '@services/admin/index';
-// import { Skeleton } from 'antd';
-// import { AdminInvestorFilterTypes } from 'kudade/types/admininvestorbusiness';
 import { useRouter } from 'next/router';
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface IDT {
   createdAt: string;
@@ -78,16 +72,21 @@ export type AdminInvestorFilterTypes = {
   newestOrOldest: string;
 
   filterName: string;
+  fetchedStudent: [];
+  setFetchedStudent: any;
 };
 
 
-const StudentActive: FC<AdminInvestorFilterTypes> = ({
+const StudentActive = ({
   searchCriteria,
   searchName,
   searchMode,
   newestOrOldest,
   filterName,
-}) => {
+  fetchedStudent,
+  setFetchedStudent
+
+}:any) => {
    // This state is for the search only
    const [searchState, setSearchState] = useState([]);
    const [filterState, setFilterState] = useState([]);
@@ -128,23 +127,7 @@ const StudentActive: FC<AdminInvestorFilterTypes> = ({
    const getAdminIndividualOrder = async () => {
      setIsFetching2(true);
      try {
-      //  const res = await adminService.getAdminIndividualOrder(pageSize, currentPage, filterName);
-      //  if (res.data.data.results.length === 0) {
-      //    setShowPagination('show-no');
-      //  } else {
-      //    setShowPagination('show-yes');
-      //  }
- 
-      //  createArray(res?.data?.data?.totalPages); // I just added this
- 
-      //  setTotalRecords(res.data.data.totalResults);
-      //  if (newestOrOldest === 'newestFirst') {
-      //    const sortedResult = res.data.data.results.sort(sortD);
-      //    setOrderState(sortedResult);
-      //  } else {
-      //    const sortedResult = res.data.data.results.sort(sortA);
-      //    setOrderState(sortedResult);
-      //  }
+      
      } catch (error: any) {
        setIsFetching2(false);
        let message = '';
@@ -311,15 +294,15 @@ const StudentActive: FC<AdminInvestorFilterTypes> = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {individual
-                      && individual.length > 0
-                      && individual.map((item: IDT, index: number) => {
+                    {fetchedStudent
+                      && fetchedStudent.length > 0
+                      && fetchedStudent.map((item: any, index: number) => {
                         const { id } = item;
                         return (
                           <>
-                            {item.bvn && (
+                            {item && (
                               <tr
-                                onClick={() => router.push(`/admin/${id}/investordetails`)}
+                                // onClick={() => router.push(`/admin/${id}/investordetails`)}
                                 className="bg-white border-b cursor-pointer"
                                 key={`${index}-investorID`}
                               >
@@ -327,23 +310,23 @@ const StudentActive: FC<AdminInvestorFilterTypes> = ({
                                   scope="row"
                                   className="px-6 py-4 whitespace-nowrap cursor-pointer"
                                 >
-                                  {item.bvn.number}
+                                  {item?.NationalID}
                                 </th>
 
-                                {/* <td className="px-6 py-4">
-                                  <span className="bg-blue-100 p-1">{item.bvn.fullName}</span>
-                                </td> */}
+                                <td className="px-6 py-4">
+                                  <span className="bg-blue-100 p-1">{item?.firstname}</span>
+                                </td>
 
-                                <td className="px-6 py-4">{item?.address}</td>
+                                <td className="px-6 py-4">{item?.surname}</td>
 
                                 <td className="px-6 py-4">{`${
-                                  item?.createdAt.split('T')[0].split('-')[2]
-                                }/${item?.createdAt.split('T')[0].split('-')[1]}/${
-                                  item?.createdAt.split('T')[0].split('-')[0]
+                                  item?.date.split('T')[0].split('-')[2]
+                                }/${item?.date.split('T')[0].split('-')[1]}/${
+                                  item?.date.split('T')[0].split('-')[0]
                                 }`}</td>
 
-                                <td className="px-6 py-4">{item.amountInvested}</td>
-                                <td className="px-6 py-4">{item.investmentCount}</td>
+                                <td className="px-6 py-4">{item.studentNumber}</td>
+                               
                               </tr>
                             )}
                           </>
@@ -354,16 +337,7 @@ const StudentActive: FC<AdminInvestorFilterTypes> = ({
               </div>
             </div>
 
-            {totalPages.length >= 1 && (
-              <div className="flex justify-between mt-10 mb-8">
-                <div></div>
-                {/* <PaginationComponent
-                  setCurrentPage={setCurrentPage}
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                /> */}
-              </div>
-            )}
+            
           </div>
         )}
 

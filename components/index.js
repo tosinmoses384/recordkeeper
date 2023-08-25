@@ -1,30 +1,22 @@
-import Header from './common/Header';
-import Modal from './common/Modal';
-import Toaster from './common/Toaster';
-import CustomTableLoader from './common/CustomTableLoader';
-import Tab from './common/Tab';
-import Main from './Main';
-import Sidebar from './common/Sidebar';
-import TeacherAndStudent from './teacherAndStudent/TeacherAndStudent';
-import TeacherActive from './teacherAndStudent/TeacherActive';
-import StudentActive from './teacherAndStudent/StudentActive';
-import Footer from './common/Footer';
-import { showToastMessage, showToastErrorMessage, showToastWarningMessage, showToastInfoMessage } from './common/Toaster';
+import Main from "./Main";
+import AirbnbDateRange from "./common/AirbnbDateRange";
+import CustomTableLoader from "./common/CustomTableLoader";
+import Footer from "./common/Footer";
+import Header from "./common/Header";
+import Modal from "./common/Modal";
+import Sidebar from "./common/Sidebar";
+import Tab from "./common/Tab";
+import Toaster, {
+  showToastErrorMessage,
+  showToastInfoMessage,
+  showToastMessage,
+  showToastWarningMessage,
+} from "./common/Toaster";
+import StudentActive from "./teacherAndStudent/StudentActive";
+import TeacherActive from "./teacherAndStudent/TeacherActive";
+import TeacherAndStudent from "./teacherAndStudent/TeacherAndStudent";
 
 export {
-  Header,
-  Modal,
-  Toaster,
-  CustomTableLoader,
-  Main,
-  Tab,
-  Sidebar,
-  TeacherAndStudent,
-  TeacherActive,
-  StudentActive,
-  Footer,
-  showToastMessage,
-  showToastErrorMessage,
-  showToastWarningMessage,
-  showToastInfoMessage
+  AirbnbDateRange, CustomTableLoader, Footer, Header, Main, Modal, Sidebar, StudentActive, Tab, TeacherActive, TeacherAndStudent, Toaster, showToastErrorMessage, showToastInfoMessage, showToastMessage, showToastWarningMessage
 };
+
