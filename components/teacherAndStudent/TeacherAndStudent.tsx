@@ -1,8 +1,7 @@
 import { StudentActive, TeacherActive } from "@/components";
 import { useEffect, useState } from "react";
-
+import { ToastContainer } from "react-toastify";
 import { Tab } from "@/components";
-
 
 export interface investorDefinedTypes {
   summary: [];
@@ -64,28 +63,20 @@ export interface investorDefinedTypes {
   companyLogo: string;
 }
 
-const TeacherAndStudent = ({ 
-  setshowModal, 
-  iTab, 
+const TeacherAndStudent = ({
+  setshowModal,
+  iTab,
   setTab,
   individual,
   setIndividual,
   fetchedStudent,
-  setFetchedStudent 
-
+  setFetchedStudent,
 }: any) => {
-  // const [individual, setIndividual] = useState([]);
-  const [pageSize] = useState(10);
-  const [currentPage] = useState(1);
-
- 
-  const [corporate, setCorporate] = useState([]);
-
-  const [newestOrOldest, setNewestOrOldest] = useState("newestFirst");
+  const [newestOrOldest] = useState("newestFirst");
 
   const [filterName, setFilterName] = useState("day");
 
-  const [searchName, setSearchName] = useState("");
+  const [searchName] = useState("");
   const [searchCriteria, setSearchCriteria] = useState("default");
   const [searchMode, setSearchMode] = useState("isTrue");
 
@@ -93,72 +84,9 @@ const TeacherAndStudent = ({
     setTab(e.target.textContent.split("(")[0].trim());
   };
 
-  // const { messageToast } = useMessageApi();
-
-  const [totalinvestor, setTotalinvestor] = useState(0);
-  const [individualInvestors, setTotalIndividualInvestors] = useState(0);
-  const [corporateInvestors, setTotalCorporateInvestors] = useState(0);
-  const [totalInvestment, setTotalInvestment] = useState(0);
-
-  // DEFAULT
-  const getAdminAllindividualInvestors = async () => {
-    try {
-      // const res = await adminService.getAdminAllindividualInvestors(pageSize, currentPage);
-      // setIndividual(res.data.data.results);
-      // setTotalinvestor(res.data.totalInvestors);
-      // setTotalIndividualInvestors(res.data.totalIndividualInvestors);
-      // setTotalCorporateInvestors(res.data.totalCorporateInvestors);
-      // setTotalInvestment(res.data.summary[0].totalInvestments);
-    } catch (error: any) {
-      let message = "";
-      if (error?.response) {
-        message =
-          error.response?.data?.message ??
-          error.response?.data?.error[0].message;
-      } else if (error?.message) {
-        message = error.message;
-      } else {
-        message = "Oops! Something went wrong.";
-      }
-      // messageToast(message, 'error');
-    }
-  };
-
-  const getAdminAllCorporateInvestors = async () => {
-    try {
-      // const res = await adminService.getAdminAllCorporateInvestors(pageSize, currentPage);
-      // setCorporate(res.data.data.results);
-    } catch (error: any) {
-      let message = "";
-      if (error?.response) {
-        message =
-          error.response?.data?.message ??
-          error.response?.data?.error[0].message;
-      } else if (error?.message) {
-        message = error.message;
-      } else {
-        message = "Oops! Something went wrong.";
-      }
-      // messageToast(message, 'error');
-    }
-  };
-
-  useEffect(() => {
-    getAdminAllindividualInvestors();
-    getAdminAllCorporateInvestors();
-  }, []);
-
-  const filterTable = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchName(e.target.value);
-  };
-
-  const filterTableOrder = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFilterName(e.target.value);
-  };
-
   return (
     <>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
 
       <div className="flex flex-wrap gap-3 items-center justify-between">
         <div>
@@ -220,4 +148,4 @@ const TeacherAndStudent = ({
   );
 };
 
-export {TeacherAndStudent};
+export { TeacherAndStudent };
