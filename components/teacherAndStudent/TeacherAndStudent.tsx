@@ -2,6 +2,9 @@ import { StudentActive, TeacherActive } from "@/components";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { Tab } from "@/components";
+import { EmptyRaiseExplore } from '@/components';
+
+//EmptyRaiseExplore
 
 export interface investorDefinedTypes {
   summary: [];
@@ -118,7 +121,11 @@ const TeacherAndStudent = ({
           <div id="myTabContent">
             <>
               {iTab === "Teacher" && (
-                <TeacherActive
+                <>
+               {individual.length === 0 && <EmptyRaiseExplore />}
+
+
+               {individual.length > 0 && <TeacherActive
                   searchCriteria={searchCriteria}
                   searchName={searchName}
                   searchMode={searchMode}
@@ -126,11 +133,18 @@ const TeacherAndStudent = ({
                   filterName={filterName}
                   individual={individual}
                   setIndividual={setIndividual}
-                />
+                />}
+                </>
+                
               )}
 
               {iTab === "Student" && (
-                <StudentActive
+                <>
+                {fetchedStudent.length === 0 && <EmptyRaiseExplore />}
+
+
+
+               {fetchedStudent.length > 0 && <StudentActive
                   searchCriteria={searchCriteria}
                   searchName={searchName}
                   searchMode={searchMode}
@@ -138,7 +152,10 @@ const TeacherAndStudent = ({
                   filterName={filterName}
                   setFetchedStudent={setFetchedStudent}
                   fetchedStudent={fetchedStudent}
-                />
+                />}
+                </>
+
+                
               )}
             </>
           </div>
