@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { showToastErrorMessage, showToastMessage } from "@/components";
 import { ToastContainer } from "react-toastify";
-
+import { users } from "@/services";
 import moment from "moment";
 
 export type newUser = {
@@ -15,24 +16,12 @@ export type newUser = {
   salary?: string;
 };
 
-const Modal = ({
-  replyHasBeenSent,
-  setshowModal,
-  iTab,
-  individual,
-  setIndividual,
-  fetchedStudent,
-  setFetchedStudent
-}: any) => {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [isDateValid, setIsDateValid] = useState(true);
+const Modal = ({ replyHasBeenSent, setshowModal, iTab }: any) => {
+  const [selectedDate] = useState(null);
 
-  const [isDateRangeValidTeacher, setIsDateRangeValidTeacher] = useState(true);
-  const [isDateRangeValidStudent, setIsDateRangeValidStudent] = useState(true);
-  const [startDateTeacher, setStartDateTeacher] = useState<any>();
-  const [endDateTeacher, setEndDateTeacher] = useState<any>();
-  const [startDateStudent, setStartDateStudent] = useState<any>();
-  const [endDateStudent, setEndDateStudent] = useState<any>();
+  const [startDateTeacher] = useState<any>();
+
+  const [endDateStudent] = useState<any>();
 
   const [valSent, setValSent] = useState(false);
 
@@ -43,11 +32,6 @@ const Modal = ({
   const [teacherDOB, setTeacherDOB] = useState("");
   const [studentDOB, setStudentDOB] = useState("");
   const [expectedRetErr, setExpectedRetErr] = useState<null | string>(null);
-  const [expectedRetErr1, setExpectedRetErr1] = useState<null | string>(null);
-  const [expectedRetErr2, setExpectedRetErr2] = useState<null | string>(null);
-  const [expectedRetErr3, setExpectedRetErr3] = useState<null | string>(null);
-  const [expectedRetErr4, setExpectedRetErr4] = useState<null | string>(null);
-  const [expectedRetErr5, setExpectedRetErr5] = useState<null | string>(null);
 
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [formState, setFormState] = useState<newUser>({
@@ -77,7 +61,6 @@ const Modal = ({
 
   const addTeacher = async () => {
     if (iTab === "Teacher") {
-      // valHasBeenSent()
       if (
         formState.id === "" ||
         formState.title === "" ||
@@ -97,23 +80,24 @@ const Modal = ({
           setIsProcessing(true);
 
           const payload = {
-            id: formState.id,
+            nationalID: formState.id,
             title: formState.title,
             firstname: formState.firstname,
             surname: formState.surname,
-            date: formState.date,
-            number: formState.numb,
+            dateOfBirth: formState.date,
+            teacherNumber: formState.numb,
             salary: formState.salary,
           };
-          setIndividual((prev:any)=>{
-            return prev.push(payload)
-          })
 
-          await await delay(9000);
-          // showToastMessage("added successfully");
-          await delay(9000);
-          replyHasBeenSent();
-          setshowModal(false);
+          const resp = await users.addTeacher(payload);
+
+          if (resp.status === 200) {
+            showToastMessage("added successfully");
+            await delay(5000);
+            replyHasBeenSent();
+
+            setshowModal(false);
+          }
         } catch (error: any) {
           let message = "";
 
@@ -123,10 +107,10 @@ const Modal = ({
               error.response?.data?.error[0].message;
           } else if (error?.message) {
             message = error.message;
-            // showToastErrorMessage(message);
+            showToastErrorMessage(message);
           } else {
             message = "Oops! Something went wrong.";
-            // showToastErrorMessage(message);
+            showToastErrorMessage(message);
           }
         }
       }
@@ -155,21 +139,22 @@ const Modal = ({
           setIsProcessing(true);
 
           const payload = {
-            id: formState.id,
+            nationalID: formState.id,
             firstname: formState.firstname,
             surname: formState.surname,
-            date1: formState.date1,
-            number: formState.numb,
+            dateOfBirth: formState.date1,
+            studentNumber: formState.numb,
           };
-          setFetchedStudent((prev:any)=>{
-            return prev.push(payload)
-          })
 
-          await await delay(9000);
-          // showToastMessage("added successfully");
-          await delay(9000);
-          replyHasBeenSent();
-          setshowModal(false);
+          const resp = await users.addStudent(payload);
+
+          if (resp.status === 200) {
+            showToastMessage("added successfully");
+            await delay(5000);
+            replyHasBeenSent();
+
+            setshowModal(false);
+          }
         } catch (error: any) {
           let message = "";
 
@@ -179,10 +164,10 @@ const Modal = ({
               error.response?.data?.error[0].message;
           } else if (error?.message) {
             message = error.message;
-            // showToastErrorMessage(message);
+            showToastErrorMessage(message);
           } else {
             message = "Oops! Something went wrong.";
-            // showToastErrorMessage(message);
+            showToastErrorMessage(message);
           }
         }
       }
@@ -198,14 +183,12 @@ const Modal = ({
     if (iTab === "Teacher") {
       if (ageDifference < minAgeInYears) {
         setTeacherDOB("Their age may not be less than 21");
-        // return;
       } else {
         setTeacherDOB("");
       }
     } else if (iTab === "Student") {
       if (ageDifference1 > minAgeInYears1) {
         setStudentDOB("Their age may not be more than 22");
-        // return;
       } else {
         setStudentDOB("");
       }
@@ -296,7 +279,7 @@ const Modal = ({
                       Firstname<span className="text-red-500"> *</span>
                     </label>
                     <input
-                    id='fname'
+                      id="fname"
                       type="text"
                       name="firstname"
                       placeholder="First name"
@@ -324,7 +307,7 @@ const Modal = ({
                       Surname<span className="text-red-500"> *</span>
                     </label>
                     <input
-                      id='lname'
+                      id="lname"
                       type="text"
                       name="surname"
                       placeholder="Surname"
@@ -352,7 +335,7 @@ const Modal = ({
                       National ID Number<span className="text-red-500"> *</span>
                     </label>
                     <input
-                      id='nid'
+                      id="nid"
                       type="text"
                       name="id"
                       placeholder="National ID Number"
@@ -382,7 +365,7 @@ const Modal = ({
                         Title<span className="text-red-500"> *</span>
                       </label>
                       <select
-                        id='ttitle'
+                        id="ttitle"
                         name="title"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                         value={formState.title}
@@ -390,11 +373,11 @@ const Modal = ({
                         required
                       >
                         <option value="">Select a title</option>
-                        <option value="CEO">Mr</option>
-                        <option value="CFO">Mrs</option>
-                        <option value="CTO">Miss</option>
-                        <option value="COO">Dr</option>
-                        <option value="Director">Prof</option>
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Dr">Dr</option>
+                        <option value="Prof">Prof</option>
                       </select>
 
                       {formState.title === "" && (
@@ -415,10 +398,11 @@ const Modal = ({
                         htmlFor="dob"
                         className="block mb-2 text-sm text-[#000]"
                       >
-                        Teacher Date of Birth<span className="text-red-500"> *</span>
+                        Teacher Date of Birth
+                        <span className="text-red-500"> *</span>
                       </label>
                       <input
-                        id='dob'
+                        id="dob"
                         type="date"
                         name="date"
                         placeholder="Date of birth"
@@ -455,10 +439,11 @@ const Modal = ({
                         htmlFor="dob1"
                         className="block mb-2 text-sm text-[#000]"
                       >
-                        Student Date of Birth<span className="text-red-500"> *</span>
+                        Student Date of Birth
+                        <span className="text-red-500"> *</span>
                       </label>
                       <input
-                        id='dob1'
+                        id="dob1"
                         type="date"
                         name="date1"
                         placeholder="Date of birth"
@@ -498,7 +483,7 @@ const Modal = ({
                       <span className="text-red-500"> *</span>
                     </label>
                     <input
-                      id='tsnumb'
+                      id="tsnumb"
                       type="text"
                       name="numb"
                       placeholder="Number"
@@ -527,7 +512,7 @@ const Modal = ({
                         Salary<span className="text-red-500"></span>
                       </label>
                       <input
-                        id='sal'
+                        id="sal"
                         type="number"
                         name="salary"
                         placeholder="Salary"
@@ -549,14 +534,7 @@ const Modal = ({
                   disabled={isProcessing}
                   className="btn2"
                 >
-                  {isProcessing ? (
-                    <>
-                     
-                      Processing Data...
-                    </>
-                  ) : (
-                    "Save"
-                  )}
+                  {isProcessing ? <>Processing Data...</> : "Save"}
                 </button>
               </div>
             </div>
@@ -567,4 +545,4 @@ const Modal = ({
   );
 };
 
-export {Modal};
+export { Modal };

@@ -1,5 +1,5 @@
 import { CustomTableLoader } from "@/components";
-import { useRouter } from "next/router";
+
 import { useEffect, useState } from "react";
 
 export type AdminInvestorFilterTypes = {
@@ -16,62 +16,18 @@ export type AdminInvestorFilterTypes = {
 
 const StudentActive = ({
   searchCriteria,
-  searchName,
-  searchMode,
-  newestOrOldest,
-  filterName,
+
   fetchedStudent,
-  setFetchedStudent,
 }: any) => {
-  // This state is for the search only
-  const [searchState, setSearchState] = useState([]);
-  const [filterState, setFilterState] = useState([]);
-  const [orderState, setOrderState] = useState([]);
-  const [, setShowPagination] = useState("show-yes");
   const [pageSize] = useState(30);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [, setTotalRecords] = useState(1);
+  const [currentPage] = useState(1);
+
   const [isFetching, setIsFetching] = useState(true);
-  const [isFetching2, setIsFetching2] = useState(true);
-  const router = useRouter();
-  //  const { messageToast } = useMessageApi();
-  const [individual, setIndividual] = useState([]);
-
-  const sortA = (a: any, b: any) => {
-    const c = a.createdAt;
-    const d = b.createdAt;
-    return new Date(c).getTime() - new Date(d).getTime();
-  };
-
-  const sortD = (a: any, b: any) => {
-    const c = a.createdAt;
-    const d = b.createdAt;
-    return new Date(d).getTime() - new Date(c).getTime();
-  };
-
-  const [totalPages, setTotalPages] = useState<number[]>([]);
-
-  function createArray(num: number) {
-    setTotalPages(
-      Array(num)
-        .fill(null)
-        .map((_, index) => index + 1)
-    );
-  }
 
   // DEFAULT
   const getAllStudent = async () => {
     setIsFetching(true);
     try {
-      //  const res = await adminService.getAllStudent(pageSize, currentPage);
-      //  if (res.data.data.results.length === 0) {
-      //    setShowPagination('show-no');
-      //  } else {
-      //    setShowPagination('show-yes');
-      //  }
-      //  createArray(res?.data?.data?.totalPages); // I just added this
-      //  setTotalRecords(res.data.data.totalResults);
-      //  setIndividual(res.data.data.results);
     } catch (error: any) {
       setIsFetching(false);
       let message = "";
@@ -93,8 +49,6 @@ const StudentActive = ({
   useEffect(() => {
     getAllStudent();
   }, [currentPage, pageSize]);
-
- 
 
   return (
     <>
@@ -147,14 +101,13 @@ const StudentActive = ({
                               {item && (
                                 <tr
                                   className="bg-white border-b cursor-pointer"
-                                  // key={`${index}-${item?.NationalID}`}
-                                  key={item._id}
+                                  key={index}
                                 >
                                   <th
                                     scope="row"
                                     className="px-6 py-4 whitespace-nowrap cursor-pointer"
                                   >
-                                    {item?.NationalID}
+                                    {item?.nationalID}
                                   </th>
 
                                   <td className="px-6 py-4">
@@ -170,9 +123,17 @@ const StudentActive = ({
                                   </td>
 
                                   <td className="px-6 py-4">{`${
-                                    item?.date.split("T")[0].split("-")[2]
-                                  }/${item?.date.split("T")[0].split("-")[1]}/${
-                                    item?.date.split("T")[0].split("-")[0]
+                                    item?.dateOfBirth
+                                      .split("T")[0]
+                                      .split("-")[2]
+                                  }/${
+                                    item?.dateOfBirth
+                                      .split("T")[0]
+                                      .split("-")[1]
+                                  }/${
+                                    item?.dateOfBirth
+                                      .split("T")[0]
+                                      .split("-")[0]
                                   }`}</td>
 
                                   <td className="px-6 py-4">
